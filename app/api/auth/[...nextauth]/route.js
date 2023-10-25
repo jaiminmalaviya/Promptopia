@@ -1,9 +1,8 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
-import GithubProvider from 'next-auth/providers/github'
 
 import User from '@models/user'
-import {connectToDB} from '@utils/database'
+import { connectToDB } from '@utils/database'
 
 const handler = NextAuth({
     providers: [
@@ -13,18 +12,18 @@ const handler = NextAuth({
         }),
     ],
     callbacks: {
-        async session({session}) {
+        async session({ session }) {
             // store the user id from MongoDB to session
-            const sessionUser = await User.findOne({email: session.user.email})
+            const sessionUser = await User.findOne({ email: session.user.email })
             session.user.id = sessionUser._id.toString()
             return session
         },
-        async signIn({account, profile, user, credentials}) {
+        async signIn({ account, profile, user, credentials }) {
             try {
                 await connectToDB()
 
                 // check if user already exists
-                const userExists = await User.findOne({email: profile.email})
+                const userExists = await User.findOne({ email: profile.email })
 
                 // if not, create a new document and save user in MongoDB
                 if (!userExists) {
@@ -44,4 +43,4 @@ const handler = NextAuth({
     },
 })
 
-export {handler as GET, handler as POST}
+export { handler as GET, handler as POST }

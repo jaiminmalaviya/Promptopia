@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import toast, { Toaster, resolveValue } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 
 import Form from '@components/Form'
 
