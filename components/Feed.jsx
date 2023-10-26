@@ -29,6 +29,16 @@ const Feed = () => {
         }
         fetchPosts()
     }, [])
+    useEffect(() => {
+        // Fetch and store the original posts from your API
+        const fetchPosts = async () => {
+            const response = await fetch('/api/prompt')
+            const data = await response.json()
+            setPosts(data)
+            setOriginalPosts(data)
+        }
+        fetchPosts()
+    }, [])
 
     const searchPrompt = (searchText) => {
         if (!searchText) {
